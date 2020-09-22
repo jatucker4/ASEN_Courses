@@ -1,0 +1,623 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>CA3_Driver</title><meta name="generator" content="MATLAB 9.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-03-31"><meta name="DC.source" content="CA3_Driver.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Housekeeping</a></li><li><a href="#3">Question 1</a></li><li><a href="#4">Question 2</a></li><li><a href="#5">Question 3</a></li><li><a href="#6">Functions Called</a></li></ul></div><pre class="codeinput"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">% ASEN 3111 - CA3</span>
+<span class="comment">%</span>
+<span class="comment">% Created By: Johnathan Tucker</span>
+<span class="comment">%</span>
+<span class="comment">% Collaborators: Michael Martinson</span>
+<span class="comment">%</span>
+<span class="comment">% The purpose of the script is to act as a driver that will execute the</span>
+<span class="comment">% functions necesary to solve questions two and three of CA3. Note that</span>
+<span class="comment">% question one is the function Vortex_Panel itself.</span>
+<span class="comment">%</span>
+<span class="comment">% Created Date: 3/25/2020</span>
+<span class="comment">%</span>
+<span class="comment">% Change Log:</span>
+<span class="comment">%           - 3/26/2020: Code up the function for the first question</span>
+<span class="comment">%           - 3/28/2020: Code up the function for the second question</span>
+<span class="comment">%           - 3/31/2020: Finalize formatting</span>
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+</pre><h2 id="2">Housekeeping</h2><pre class="codeinput">clc;
+clear <span class="string">all</span>;
+close <span class="string">all</span>;
+tic
+</pre><h2 id="3">Question 1</h2><p>For my solution to question 1 please see my Vortex_Panel function</p><h2 id="4">Question 2</h2><pre class="codeinput">Question_2()
+</pre><pre class="codeoutput">The number of panels required to obtain 0.01 absolute error...
+when compared to the exact value is 465.000000
+</pre><img vspace="5" hspace="5" src="CA3_Driver_01.png" alt=""> <img vspace="5" hspace="5" src="CA3_Driver_02.png" alt=""> <img vspace="5" hspace="5" src="CA3_Driver_03.png" alt=""> <h2 id="5">Question 3</h2><pre class="codeinput">Question_3()
+</pre><pre class="codeoutput">%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 0012 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Results for the NACA 0012 Airfoil:
+Vortex Panel Estimated Lift Curve Slope: 6.888181 [1/rad]
+Thin Airfoil Theory Estimated Lift Curve Slope: 6.283185 [1/rad]
+Percent Error of Lift Curve Slope Estimates: 8.783093 %
+
+Vortex Panel Estimated Zero Lift AOA: 0.417718 [deg]
+Thin Airfoil Theory Estimated Zero Lift AOA: -0.000000 [deg]
+Absolute Error of Zero Lift AOA Estimates: 0.417718 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 2412 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Results for the NACA 2412 Airfoil:
+Vortex Panel Estimated Lift Curve Slope: 6.890932 [1/rad]
+Thin Airfoil Theory Estimated Lift Curve Slope: 6.283185 [1/rad]
+Percent Error of Lift Curve Slope Estimates: 8.819509 %
+
+Vortex Panel Estimated Zero Lift AOA: -1.727840 [deg]
+Thin Airfoil Theory Estimated Zero Lift AOA: -1.512579 [deg]
+Absolute Error of Zero Lift AOA Estimates: 0.215261 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 4412 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Results for the NACA 4412 Airfoil:
+Vortex Panel Estimated Lift Curve Slope: 6.894439 [1/rad]
+Thin Airfoil Theory Estimated Lift Curve Slope: 6.283185 [1/rad]
+Percent Error of Lift Curve Slope Estimates: 8.865899 %
+
+Vortex Panel Estimated Zero Lift AOA: -3.857460 [deg]
+Thin Airfoil Theory Estimated Zero Lift AOA: -3.025159 [deg]
+Absolute Error of Zero Lift AOA Estimates: 0.832301 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 2424 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Results for the NACA 2424 Airfoil:
+Vortex Panel Estimated Lift Curve Slope: 7.549962 [1/rad]
+Thin Airfoil Theory Estimated Lift Curve Slope: 6.283185 [1/rad]
+Percent Error of Lift Curve Slope Estimates: 16.778582 %
+
+Vortex Panel Estimated Zero Lift AOA: -2.306275 [deg]
+Thin Airfoil Theory Estimated Zero Lift AOA: -1.512579 [deg]
+Absolute Error of Zero Lift AOA Estimates: 0.215261 
+
+</pre><img vspace="5" hspace="5" src="CA3_Driver_04.png" alt=""> <h2 id="6">Functions Called</h2><p>The following functions were built and called as a part of this assignment</p><pre class="language-matlab">
+<span class="keyword">function</span> [Cl, CP] = Vortex_Panel(x,y,V_inf,alpha,plotcp,increment)
+<span class="comment">%Vortex_Panel Performs the calculations detailed in the Kuethe and Chow</span>
+<span class="comment">%document</span>
+<span class="comment">%</span>
+<span class="comment">% Author: Johnathan Tucker</span>
+<span class="comment">%</span>
+<span class="comment">% Collaborators: N/A</span>
+
+<span class="comment">% This function takes in the x and y values from the NACA airfoil function,</span>
+<span class="comment">% the free stream velocity, the angle of attack, plotcp flag, and plot</span>
+<span class="comment">% increments. It outputs the coefficient of pressure, coefficient of lift,</span>
+<span class="comment">% and displays a plot of coefficient of pressure vs x/c</span>
+<span class="comment">%</span>
+<span class="comment">% Last Revised: 3/26/2020</span>
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">% Get the chord length for calculating Cl</span>
+c = max(x) - min(x);
+
+<span class="comment">% Begin the translation from 4tran to MATLAB</span>
+<span class="comment">% Create necessary variables</span>
+M = length(x) - 1;
+MP1 = M + 1;
+alpha = alpha *(pi/180);
+
+
+<span class="keyword">for</span> I = 1:M
+    IP1 = I + 1;
+    X(I) = 0.5*(x(I) + x(IP1));
+    Y(I) = 0.5*(y(I) + y(IP1));
+    S(I) = sqrt( (x(IP1) - x(I))^2 + (y(IP1) - y(I))^2 );
+    theta(I) = atan2( (y(IP1) - y(I)) , (x(IP1) - x(I)));
+    sine(I) = sin(theta(I));
+    cosine(I) = cos(theta(I)); 
+<span class="keyword">end</span>
+RHS = sin(theta - alpha);
+
+<span class="keyword">for</span> I = 1:M
+    <span class="keyword">for</span> J = 1:M     
+        <span class="keyword">if</span> I == J
+            CN1(I,J) = -1;
+            CN2(I,J) = 1;
+            CT1(I,J) = 0.5*pi;
+            CT2(I,J) = 0.5*pi;
+        <span class="keyword">else</span>
+            A = -(X(I) - x(J))*cosine(J) - (Y(I) - y(J))*sine(J);
+            B = (X(I) - x(J))^2 + (Y(I) - y(J))^2;
+            C = sin(theta(I) - theta(J));
+            D = cos(theta(I) - theta(J));
+            E = (X(I) - x(J))*sine(J) - (Y(I) - y(J))*cosine(J);
+            F = log(1 + S(J)*(S(J) + 2.*A)/B);
+            G = atan2(E*S(J), B + A*S(J));
+            P = (X(I) - x(J))*sin(theta(I) - 2.*theta(J)) +<span class="keyword">...</span>
+                (Y(I) - y(J))*cos(theta(I) - 2.*theta(J));
+            Q = (X(I) - x(J))*cos(theta(I) - 2.*theta(J)) -<span class="keyword">...</span>
+                (Y(I) - y(J))*sin(theta(I) - 2.*theta(J));
+            CN2(I,J) = D + .5*Q*F/S(J) - (A*C + D*E)*G/S(J);
+            CN1(I,J) = .5*D*F + C*G - CN2(I,J);
+            CT2(I,J) = C + .5*P*F/S(J) + (A*D - C*E)*G/S(J);
+            CT1(I,J) = .5*C*F - D*G - CT2(I,J);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">for</span>  I = 1:M
+     AN(I,1) = CN1(I,1);
+     AN(I,MP1) = CN2(I,M);
+     AT(I,1) = CT1(I,1);
+     AT(I,MP1) = CT2(I,M);
+     <span class="keyword">for</span> J = 2:M
+         AN(I,J) = CN1(I,J) + CN2(I,J-1);
+         AT(I,J) = CT1(I,J) + CT2(I,J-1);
+     <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+AN(MP1,1) = 1;
+AN(MP1,MP1) = 1;
+<span class="keyword">for</span> J = 2:M
+    AN(MP1,J) = 0;
+<span class="keyword">end</span>
+
+RHS(MP1) = 0;
+
+<span class="comment">% Solve the system of equations using A\b instead of Cramers</span>
+GAMA = AN\RHS';
+
+<span class="keyword">for</span> I = 1:M
+    V(I) = cos(theta(I) - alpha);
+    <span class="keyword">for</span> J = 1:MP1
+        V(I) = V(I) + AT(I,J)*GAMA(J);
+        CP(I) = 1 - V(I)^2;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">% Change from gamma prime to gamma via Kuethe and Chow</span>
+gamma = GAMA.*(2*pi*V_inf);
+<span class="comment">% Solve for CL by calculating capital GAMMA inline using CA3 Notes formulas</span>
+Cl = 2*(sum(gamma(1:end-1)'.*S))/(V_inf*c);
+
+<span class="comment">%% Create the pressure plot</span>
+<span class="comment">% This flag is if only one cp plot is wanted</span>
+<span class="keyword">if</span> plotcp == 1
+    figure
+    cp_lower = CP(1:(length(x)+1)/2);
+    cp_upper = CP((length(x)+1)/2:end);
+    scatter(x((length(x)+1)/2:end-1)./c,cp_upper,<span class="string">'r'</span>)
+    hold <span class="string">on</span>
+    scatter(x(1:(length(x)+1)/2)./c,cp_lower,<span class="string">'b'</span>)
+    title(<span class="string">'$Coefficeint\:of\:Pressure\:vs\:\\frac{x}{c}$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+    xlabel(<span class="string">'$x-distance\:[\% Chord]$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+    ylabel(<span class="string">'$Coefficient\:of\:Presure$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+    legend(<span class="string">'$Upper\:Surface$'</span>,<span class="string">'$Lower\:Surface$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+    
+<span class="comment">% This flag is for the cp subplots required for question two</span>
+<span class="keyword">elseif</span> plotcp == 2
+    hold <span class="string">on</span>
+    subplot(2,2,increment)
+    cp_lower = -CP(1:(length(x)+1)/2);
+    cp_upper = -CP((length(x)+1)/2:end);
+    scatter(x(1:(length(x)+1)/2)./c,cp_lower,<span class="string">'b'</span>)
+    hold <span class="string">on</span>
+    scatter(x((length(x)+1)/2:end-1)./c,cp_upper,<span class="string">'r'</span>)
+    title(strcat(<span class="string">'CP vs $\frac{x}{c}$ with: $\alpha$ = '</span>,num2str(alpha*180/pi),<span class="string">'$^\circ$'</span>),<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>);
+    sgtitle(<span class="string">'CP vs $\frac{x}{c}$ at Different $\alpha$ Values'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>);
+    xlabel(<span class="string">'$\frac{x}{c}$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+    ylabel(<span class="string">'$-CP$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+    legend(<span class="string">'$Lower\:Surface$'</span>,<span class="string">'$Upper\:Surface$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+<span class="keyword">end</span>
+    
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span> Question_2()
+<span class="comment">%Question_2 Performs all calculations and outputs for question 2 in CA3</span>
+<span class="comment">%</span>
+<span class="comment">% Author: Johnathan Tucker</span>
+<span class="comment">%</span>
+<span class="comment">% Collaborators: N/A</span>
+<span class="comment">%</span>
+<span class="comment">% This function has no inputs or direct outputs. However, it does display</span>
+<span class="comment">% the number of panels required to achieve a CL of 0.01 to the terminal. In</span>
+<span class="comment">% addition to this terminal display it also displays three plot. The first</span>
+<span class="comment">% is the convergence of CL as the number of panels increases. The second is</span>
+<span class="comment">% the CL of the NACA 0012 at different AOA's. The final is the CP of the</span>
+<span class="comment">% NACA 0012 at different AOA's.</span>
+<span class="comment">% Last Revised: 3/26/2020</span>
+<span class="comment">%% Begin code block for problem 2</span>
+<span class="comment">% To determine a measurement of panels need to aquire accuracy I'll use the</span>
+<span class="comment">% CP values from the vortex panel method to calculate CL and compare these</span>
+<span class="comment">% with what should be the exact value for the NACA 0012 at zero degrees</span>
+<span class="comment">% AOA, CL = 0;</span>
+
+<span class="comment">% Exact CL value const</span>
+CL_0012_exact = 0;
+
+<span class="comment">% Now iterate through different panel values noting when 1 percent error is</span>
+<span class="comment">% achieved</span>
+error_cl = 100;
+<span class="comment">% Get the panel increment close so it doesn't run forever</span>
+panel_increment = 464;
+<span class="comment">% Iterate on the process until CL is 0.01 or lower</span>
+<span class="keyword">while</span> error_cl &gt;= 0.01
+    <span class="comment">% Iterate on calculating the x and y values and then CL and CP</span>
+    [naca_0012_x_iter,naca_0012_y_iter] = NACA_Airfoil(0/100,0/10,12/100,1,panel_increment);
+    [Cl_0012_iter,Cp_0012_iter] = Vortex_Panel(naca_0012_x_iter,naca_0012_y_iter,1,0,0,0);
+    <span class="comment">% Increment the panel number</span>
+    panel_increment = panel_increment + 1;
+    <span class="comment">% Calculate the error between the exact and calculated CL values</span>
+    error_cl = abs(CL_0012_exact - Cl_0012_iter);
+<span class="keyword">end</span>
+fprintf(<span class="string">"The number of panels required to obtain 0.01 absolute error...\nwhen compared to the exact value is %f\n"</span>,panel_increment)
+
+<span class="comment">%% Create a plot for CL versus the number of panels</span>
+
+<span class="comment">% error_cl = 100;</span>
+<span class="comment">% % Get the panel increment close so it doesn't run forever</span>
+<span class="comment">% panel_increment = 1;</span>
+<span class="comment">% % Iterate on the process until CL is 0.01 or lower</span>
+<span class="comment">% while error_cl &gt;= 0.01</span>
+<span class="comment">%     % Iterate on calculating the x and y values and then CL and CP</span>
+<span class="comment">%     [naca_0012_x_iter,naca_0012_y_iter] = NACA_Airfoil(0/100,0/10,12/100,1,panel_increment);</span>
+<span class="comment">%     [Cl_0012_iter(panel_increment - 3),Cp_0012_iter] = Vortex_Panel(naca_0012_x_iter,naca_0012_y_iter,1,0,0,0);</span>
+<span class="comment">%     % Increment the panel number</span>
+<span class="comment">%     panel_increment = panel_increment + 1;</span>
+<span class="comment">%     % Calculate the error between the exact and calculated CL values</span>
+<span class="comment">%     error_cl = abs(CL_0012_exact - Cl_0012_iter);</span>
+<span class="comment">% end</span>
+
+<span class="comment">% Load in the full CL vector. This vector was created by running the code</span>
+<span class="comment">% above that is commented out.</span>
+CL_iter_vec = load(<span class="string">"CL_iteration_mat.mat"</span>);
+<span class="comment">% Save the CL vector to a const.</span>
+CL_iter_vec = CL_iter_vec.Cl_0012_iter;
+<span class="comment">% Create the Figure</span>
+figure
+plot(1:465,[1,2,3,4,CL_iter_vec])
+hold <span class="string">on</span>
+plot(1:465,ones(1,465).*0.01)
+title(<span class="string">'CL vs Number of Panels for NACA 0012'</span>,<span class="keyword">...</span>
+    <span class="string">'Interpreter'</span>,<span class="string">'latex'</span>,<span class="string">'FontSize'</span>,16)
+xlabel(<span class="string">'$Panel\:Number$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>,<span class="string">'FontSize'</span>,12)
+ylabel(<span class="string">'$Coefficient\:of\:Lift$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>,<span class="string">'FontSize'</span>,12)
+legend(<span class="string">'$CL$'</span>,<span class="string">'$0.01\:Desired\:CL$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+
+<span class="comment">%% Now using the panel increment to reach the desired error I'll create</span>
+<span class="comment">% plots of CP at the desired angles of attack </span>
+alpha_vec = [-5,0,5,10];
+figure
+<span class="comment">% Iterate through the desired AOA's and get the corresponding CL's</span>
+<span class="keyword">for</span> i = 1:length(alpha_vec)
+    [Cl_0012_iter_2(i),Cp_0012_iter] = Vortex_Panel(naca_0012_x_iter,naca_0012_y_iter,1,alpha_vec(i),2,i);
+<span class="keyword">end</span>
+<span class="comment">%% Finally create a plot of the CL values at these specified AOA's</span>
+figure
+<span class="comment">% Iterate through the CL values and plot them</span>
+<span class="keyword">for</span> i = 1:length(Cl_0012_iter_2)
+    scatter(alpha_vec(i),Cl_0012_iter_2(i))
+    hold <span class="string">on</span>
+<span class="keyword">end</span>
+title(<span class="string">'$Coefficeint\:of\:Lift\:vs\:\alpha\:for\:NACA\:0012$'</span>,<span class="keyword">...</span>
+    <span class="string">'Interpreter'</span>,<span class="string">'latex'</span>,<span class="string">'FontSize'</span>,18)
+xlabel(<span class="string">'$\alpha$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>,<span class="string">'FontSize'</span>,12)
+ylabel(<span class="string">'$Coefficient\:of\:Lift$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>,<span class="string">'FontSize'</span>,12)
+legend(<span class="string">'CL at $\alpha$=-5'</span>,<span class="string">'CL at $\alpha$=0'</span>,<span class="string">'CL at $\alpha$=5'</span>,<span class="keyword">...</span>
+    <span class="string">'CL at $\alpha$=10'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span> Question_3()
+<span class="comment">%Question_3 Performs all calculations and outputs for question 3 in CA3</span>
+<span class="comment">%</span>
+<span class="comment">% Author: Johnathan Tucker</span>
+<span class="comment">%</span>
+<span class="comment">% Collaborators: Michael Martinson</span>
+<span class="comment">%</span>
+<span class="comment">% This function has no inputs or direct outputs. However, it does display</span>
+<span class="comment">% the error between thick and thin airfoil calculated zero lift angle of</span>
+<span class="comment">% attack and lift curve slope to the terminal. In addition to terminal</span>
+<span class="comment">% displays it also displays a plot of CL vs alpha for different NACA</span>
+<span class="comment">% airfoils.</span>
+<span class="comment">%</span>
+<span class="comment">% Last Revised: 3/27/2020</span>
+<span class="comment">%% Begin code block for problem 3</span>
+<span class="comment">% First get the x and y coords for each airfoil</span>
+[naca_0012_x,naca_0012_y] = NACA_Airfoil(0/100,0/10,12/100,1,150);
+[naca_2412_x,naca_2412_y] = NACA_Airfoil(2/100,4/10,12/100,1,150);
+[naca_4412_x,naca_4412_y] = NACA_Airfoil(4/100,4/10,12/100,1,150);
+[naca_2424_x,naca_2424_y] = NACA_Airfoil(2/100,4/10,24/100,1,150);
+
+<span class="comment">% Now get the Cl for each airfoil iterating alpha from -5 to 10 degrees</span>
+alpha_vec = linspace(-5,10,20);
+<span class="keyword">for</span> i = 1:length(alpha_vec)
+    [Cl_0012(i),~] = Vortex_Panel(naca_0012_x,naca_0012_y,1,alpha_vec(i),0,0);
+    [Cl_2412(i),~] = Vortex_Panel(naca_2412_x,naca_2412_y,1,alpha_vec(i),0,0);
+    [Cl_4412(i),~] = Vortex_Panel(naca_4412_x,naca_4412_y,1,alpha_vec(i),0,0);
+    [Cl_2424(i),~] = Vortex_Panel(naca_2424_x,naca_2424_y,1,alpha_vec(i),0,0);
+<span class="keyword">end</span>
+
+<span class="comment">% Plot the Cl for each airfoil on the same plot</span>
+figure
+plot(alpha_vec,Cl_0012)
+hold <span class="string">on</span>
+plot(alpha_vec,Cl_2412)
+hold <span class="string">on</span>
+plot(alpha_vec,Cl_4412)
+hold <span class="string">on</span>
+plot(alpha_vec,Cl_2424)
+ylabel(<span class="string">'$CL$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>,<span class="string">'FontSize'</span>,12)
+xlabel(<span class="string">'$\alpha$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>,<span class="string">'FontSize'</span>,12)
+title(<span class="string">'CL vs $\alpha$ of Various NACA Airfoils'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>,<span class="string">'FontSize'</span>,18)
+legend(<span class="string">"$NACA\:0012$"</span>,<span class="string">"$NACA\:2412$"</span>,<span class="string">"$NACA\:4412$"</span>,<span class="string">"$NACA\:2424$"</span>,<span class="keyword">...</span>
+    <span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+
+<span class="comment">% Compare each Cl with the thin airfoil theory Cl and the zero lift angle</span>
+<span class="comment">% of attack with the thin airfoil theory version</span>
+<span class="comment">% First Use polyfit to get the slope</span>
+slope_0012 = polyfit(alpha_vec.*pi/180,Cl_0012,1);
+slope_2412 = polyfit(alpha_vec.*pi/180,Cl_2412,1);
+slope_4412 = polyfit(alpha_vec.*pi/180,Cl_4412,1);
+slope_2424 = polyfit(alpha_vec.*pi/180,Cl_2424,1);
+
+<span class="comment">% Calculate the percent difference between thick and thin airfoil theories</span>
+slope_error_0012 = 100 * abs(slope_0012(1) - (2*pi))/slope_0012(1);
+slope_error_2412 = 100 * abs(slope_2412(1) - (2*pi))/slope_2412(1);
+slope_error_4412 = 100 * abs(slope_4412(1) - (2*pi))/slope_4412(1);
+slope_error_2424 = 100 * abs(slope_2424(1) - (2*pi))/slope_2424(1);
+
+<span class="comment">% Now get the zero lift angle of attack for the thick airfoil theory case</span>
+zeroL_aoa_0012 = (180/pi)*slope_0012(2)/slope_0012(1);
+zeroL_aoa_2412 = (180/pi)*slope_2412(2)/slope_2412(1);
+zeroL_aoa_4412 = (180/pi)*slope_4412(2)/slope_4412(1);
+zeroL_aoa_2424 = (180/pi)*slope_2424(2)/slope_2424(1);
+
+<span class="comment">% Get the zero lift angle of attack for the thin airfoil theory case</span>
+tat_zeroL_aoa_0012 = get_zlaoa_tat(0/100,0/10,1,150);
+tat_zeroL_aoa_2412 = get_zlaoa_tat(2/100,4/10,1,150);
+tat_zeroL_aoa_4412 = get_zlaoa_tat(4/100,4/10,1,150);
+tat_zeroL_aoa_2424 = get_zlaoa_tat(2/100,4/10,1,150);
+
+<span class="comment">% Compute percent difference between the zero lift AOA values for each case</span>
+zeroL_error_0012 = abs(abs(zeroL_aoa_0012) - abs(tat_zeroL_aoa_0012));
+zeroL_error_2412 = abs(abs(zeroL_aoa_2412) - abs(tat_zeroL_aoa_2412));
+zeroL_error_4412 = abs(abs(zeroL_aoa_4412) - abs(tat_zeroL_aoa_4412));
+zeroL_error_2424 = abs(abs(zeroL_aoa_2424) - abs(tat_zeroL_aoa_2424));
+
+<span class="comment">% Display all results for each airfoil</span>
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 0012 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+disp(<span class="string">"%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 0012 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"</span>)
+fprintf(<span class="string">"Results for the NACA 0012 Airfoil:\n"</span>)
+fprintf(<span class="string">"Vortex Panel Estimated Lift Curve Slope: %f [1/rad]\n"</span>,slope_0012(1))
+fprintf(<span class="string">"Thin Airfoil Theory Estimated Lift Curve Slope: %f [1/rad]\n"</span>,2*pi)
+fprintf(<span class="string">"Percent Error of Lift Curve Slope Estimates: %f %%\n\n"</span>,slope_error_0012)
+
+fprintf(<span class="string">"Vortex Panel Estimated Zero Lift AOA: %f [deg]\n"</span>,zeroL_aoa_0012)
+fprintf(<span class="string">"Thin Airfoil Theory Estimated Zero Lift AOA: %f [deg]\n"</span>,tat_zeroL_aoa_0012)
+fprintf(<span class="string">"Absolute Error of Zero Lift AOA Estimates: %f \n\n"</span>,zeroL_error_0012)
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 2412 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+disp(<span class="string">"%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 2412 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"</span>)
+fprintf(<span class="string">"Results for the NACA 2412 Airfoil:\n"</span>)
+fprintf(<span class="string">"Vortex Panel Estimated Lift Curve Slope: %f [1/rad]\n"</span>,slope_2412(1))
+fprintf(<span class="string">"Thin Airfoil Theory Estimated Lift Curve Slope: %f [1/rad]\n"</span>,2*pi)
+fprintf(<span class="string">"Percent Error of Lift Curve Slope Estimates: %f %%\n\n"</span>,slope_error_2412)
+
+fprintf(<span class="string">"Vortex Panel Estimated Zero Lift AOA: %f [deg]\n"</span>,zeroL_aoa_2412)
+fprintf(<span class="string">"Thin Airfoil Theory Estimated Zero Lift AOA: %f [deg]\n"</span>,tat_zeroL_aoa_2412)
+fprintf(<span class="string">"Absolute Error of Zero Lift AOA Estimates: %f \n\n"</span>,zeroL_error_2412)
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 4412 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+disp(<span class="string">"%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 4412 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"</span>)
+fprintf(<span class="string">"Results for the NACA 4412 Airfoil:\n"</span>)
+fprintf(<span class="string">"Vortex Panel Estimated Lift Curve Slope: %f [1/rad]\n"</span>,slope_4412(1))
+fprintf(<span class="string">"Thin Airfoil Theory Estimated Lift Curve Slope: %f [1/rad]\n"</span>,2*pi)
+fprintf(<span class="string">"Percent Error of Lift Curve Slope Estimates: %f %%\n\n"</span>,slope_error_4412)
+
+fprintf(<span class="string">"Vortex Panel Estimated Zero Lift AOA: %f [deg]\n"</span>,zeroL_aoa_4412)
+fprintf(<span class="string">"Thin Airfoil Theory Estimated Zero Lift AOA: %f [deg]\n"</span>,tat_zeroL_aoa_4412)
+fprintf(<span class="string">"Absolute Error of Zero Lift AOA Estimates: %f \n\n"</span>,zeroL_error_4412)
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 2424 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+disp(<span class="string">"%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NACA 2424 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"</span>)
+fprintf(<span class="string">"Results for the NACA 2424 Airfoil:\n"</span>)
+fprintf(<span class="string">"Vortex Panel Estimated Lift Curve Slope: %f [1/rad]\n"</span>,slope_2424(1))
+fprintf(<span class="string">"Thin Airfoil Theory Estimated Lift Curve Slope: %f [1/rad]\n"</span>,2*pi)
+fprintf(<span class="string">"Percent Error of Lift Curve Slope Estimates: %f %%\n\n"</span>,slope_error_2424)
+
+fprintf(<span class="string">"Vortex Panel Estimated Zero Lift AOA: %f [deg]\n"</span>,zeroL_aoa_2424)
+fprintf(<span class="string">"Thin Airfoil Theory Estimated Zero Lift AOA: %f [deg]\n"</span>,tat_zeroL_aoa_2424)
+fprintf(<span class="string">"Absolute Error of Zero Lift AOA Estimates: %f \n\n"</span>,zeroL_error_2412)
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span> [x,y] = NACA_Airfoil(m,p,t,c,N)
+<span class="comment">%NACA_Airfoil Performs the calculations necessary to get the x and y</span>
+<span class="comment">%vectors that describe the specified NACA airfoil</span>
+<span class="comment">%</span>
+<span class="comment">% Author: Johnathan Tucker</span>
+<span class="comment">%</span>
+<span class="comment">% Collaborators: N/A</span>
+
+<span class="comment">% This function takes in the max chord value "m", the location of max chord</span>
+<span class="comment">% "p", the thickness "t", the chord length "c", and the number of panels to</span>
+<span class="comment">% use "N". This function outputs the x and y vectors that describe the </span>
+<span class="comment">% specified NACA airfoil.</span>
+<span class="comment">%</span>
+<span class="comment">% Last Revised: 3/26/2020</span>
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">% Create vector for percentage of chord length</span>
+x = linspace(0,c,N);
+<span class="comment">% Create a vector of half thicknesses</span>
+y_t = (t/0.2)*c*(0.2969.*sqrt(x./c) - 0.1260.*(x./c) - 0.3516.*(x./c).^2 +<span class="keyword">...</span>
+    0.2843.*(x./c).^3 - 0.1036.*(x./c).^4);
+
+<span class="comment">% I need to find the index of x that is closest to the p*c value</span>
+[~,index] = min(abs(x-p*c));
+<span class="comment">% Now loop through the x values using a conditional statement that</span>
+<span class="comment">% replicates the peicewise function</span>
+<span class="keyword">for</span> i = 1:length(x)
+    <span class="keyword">if</span> i &lt;= index
+        y_c(i) = m.*(x(i)./p^2).*(2*p - x(i)./c);
+    <span class="keyword">else</span>
+        y_c(i) = m.*((c-x(i))./(1-p)^2).*(1 + x(i)./c - 2*p);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">%Adding a check for NaN values</span>
+y_c(isnan(y_c)) = 0;
+
+<span class="comment">% Create zeta to solve for the upper and lower x/y values</span>
+zeta = atan2(diff(y_c),diff(x));
+zeta = [zeta,0];
+<span class="comment">% Solve for x_u and x_l</span>
+x_u = x - y_t.*sin(zeta);
+x_l = x + y_t.*sin(zeta);
+
+<span class="comment">% Solve for y_u and y_l</span>
+y_u = y_c + y_t.*cos(zeta);
+y_l = y_c - y_t.*cos(zeta);
+
+<span class="comment">% Combine upper and lower vectors to get final x and y</span>
+x = [flip(x_u),x_l(2:end)];
+y = -[flip(y_u),y_l(2:end)];
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span> aoa_zero_lift = get_zlaoa_tat(m,p,c,N)
+<span class="comment">%GET_ZLAOA_TAT Calculates the zero lift angle of attack using thin airfoil</span>
+<span class="comment">%theory</span>
+<span class="comment">%</span>
+<span class="comment">% Author: Johnathan Tucker</span>
+<span class="comment">% Collaborators: Michael Martinson</span>
+<span class="comment">% This function takes in the max camber "m", location of max camper "p",</span>
+<span class="comment">% the chord length "c", and the number of panels "N". It outputs the zero</span>
+<span class="comment">% lift angle of attack calculated using thin airfoil theory.</span>
+<span class="comment">%</span>
+<span class="comment">% Last Revised: 3/27/2020</span>
+
+<span class="comment">% Create vector for percentage of chord length</span>
+x = linspace(0,c,N);
+<span class="comment">% I need to find the index of x that is closest to the p*c value</span>
+[~,index] = min(abs(x-p*c));
+
+<span class="comment">% Now loop through the x values using a conditional statement that</span>
+<span class="comment">% replicates the peicewise function</span>
+<span class="keyword">for</span> i = 1:length(x)
+    <span class="keyword">if</span> i &lt;= index
+        y_c(i) = m.*(x(i)./p^2).*(2*p - x(i)./c);
+    <span class="keyword">else</span>
+        y_c(i) = m.*((c-x(i))./(1-p)^2).*(1 + x(i)./c - 2*p);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Adding a check for NaN values</span>
+y_c(isnan(y_c)) = 0;
+
+<span class="comment">% Differentiate with respect to x</span>
+d_y_dx = diff(y_c)./diff(x);
+
+<span class="comment">% Create a theta vector from 0 to pi</span>
+theta = linspace(0,pi,length(d_y_dx));
+
+<span class="comment">% Calculate the zero lift AOA for outputting</span>
+aoa_zero_lift = (-1/pi)*trapz(d_y_dx.*(cos(theta)-1));
+<span class="keyword">end</span>
+
+
+</pre><pre class="codeinput">toc
+</pre><pre class="codeoutput">Elapsed time is 29.246093 seconds.
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ASEN 3111 - CA3
+% 
+% Created By: Johnathan Tucker
+%
+% Collaborators: Michael Martinson 
+%
+% The purpose of the script is to act as a driver that will execute the
+% functions necesary to solve questions two and three of CA3. Note that
+% question one is the function Vortex_Panel itself.
+%
+% Created Date: 3/25/2020
+%
+% Change Log: 
+%           - 3/26/2020: Code up the function for the first question 
+%           - 3/28/2020: Code up the function for the second question 
+%           - 3/31/2020: Finalize formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Housekeeping
+clc;
+clear all;
+close all;
+tic
+%% Question 1 
+% For my solution to question 1 please see my Vortex_Panel function
+
+%% Question 2
+Question_2()
+
+%% Question 3
+Question_3()
+
+%% Functions Called
+% The following functions were built and called as a part of this
+% assignment
+%
+% <include> Vortex_Panel.m Question_2.m Question_3.m NACA_Airfoil.m get_zlaoa_tat.m</include>
+
+toc
+##### SOURCE END #####
+--></body></html>

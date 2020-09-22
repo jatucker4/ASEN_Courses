@@ -1,0 +1,222 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Problem_10_9</title><meta name="generator" content="MATLAB 9.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-04-09"><meta name="DC.source" content="Problem_10_9.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Begin code block for part b</a></li><li><a href="#3">Begin code block for part b</a></li><li><a href="#4">Begin code block for part c</a></li><li><a href="#5">Begin code bloc for part d</a></li><li><a href="#6">Functions included</a></li></ul></div><pre class="codeinput">clc;clear <span class="string">all</span>;close <span class="string">all</span>;
+</pre><h2 id="2">Begin code block for part b</h2><pre class="codeinput">A_eoA_t = 1.53;
+p_0 = 1;
+p_e_a = 0.94;
+
+p_0op_e_a = p_0/p_e_a;
+M_e_a = pop0_solveM(p_0op_e_a);
+
+A_eoA_star_a = eq10_23_solve_area(M_e_a);
+A_toA_star_a = (1/A_eoA_t)*A_eoA_star_a;
+</pre><h2 id="3">Begin code block for part b</h2><pre class="codeinput">p_e_b = 0.886;
+
+p_0op_e_b = p_0/p_e_b;
+M_e_b = pop0_solveM(p_0op_e_b);
+
+A_eoA_star_b = eq10_23_solve_area(M_e_b);
+A_toA_star_b = (1/A_eoA_t)*A_eoA_star_b;
+</pre><h2 id="4">Begin code block for part c</h2><pre class="codeinput">p_e_c = 0.75;
+
+p_0op_e_c = p_0/p_e_c;
+M_e_c = pop0_solveM(p_0op_e_c);
+
+A_eoA_star_c = eq10_23_solve_area(M_e_c);
+A_toA_star_c = (1/A_eoA_t)*A_eoA_star_c;
+
+<span class="comment">% Create guess vector</span>
+A2oAt = 1.2:0.01:1.3;
+<span class="keyword">for</span> i = 1:length(A2oAt)
+    [Me_out(i),Pe(i)] = guess_iteration(A2oAt(i));
+<span class="keyword">end</span>
+</pre><h2 id="5">Begin code bloc for part d</h2><pre class="codeinput">p_e_d = 0.154;
+
+p_0op_e_d = p_0/p_e_d;
+M_e_d = pop0_solveM(p_0op_e_d);
+
+A_eoA_star_d = eq10_23_solve_area(M_e_d);
+A_toA_star_d = (1/A_eoA_t)*A_eoA_star_d;
+</pre><h2 id="6">Functions included</h2><pre class="language-matlab">
+<span class="keyword">function</span> area = eq10_23_solve_area(M)
+<span class="comment">%EQ10_2 Summary of this function goes here</span>
+<span class="comment">%   Detailed explanation goes here</span>
+area = sqrt((1/M^2)*((2/2.4)*(1 + (.4/2)*M^2))^(2.4/.4));
+
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span> M_out = eq10_23_solve_M(area_ratio,large)
+<span class="comment">%EQ10_23_SOLVE_M Summary of this function goes here</span>
+<span class="comment">%   Detailed explanation goes here</span>
+syms <span class="string">M</span>
+
+equation = area_ratio^2 == (1/M^2)*((2/2.4)*(1 + (.4/2)*M^2))^(2.4/.4);
+
+M1 = double(solve(equation,M));
+<span class="keyword">if</span> large == 1
+    M_out = real(M1(5));
+<span class="keyword">elseif</span> large == 0
+    M_out = real(M1(6));
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span>  delta_s = get_delta_s(M)
+<span class="comment">%GET_DELTA_S Summary of this function goes here</span>
+<span class="comment">%   Detailed explanation goes here</span>
+cp = 1.4*287/(.4);
+delta_s = cp*log( (1+ (2.8/2.4)*(M^2 - 1))*((2 + .4*M^2)/(2.4*M^2))) - <span class="keyword">...</span>
+    287*log( (1+ (2.8/2.4)*(M^2 - 1)));
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span> [Me_out,Pe] = guess_iteration(A2oAt)
+<span class="comment">%GUESS_ITERATION Summary of this function goes here</span>
+<span class="comment">%   Detailed explanation goes here</span>
+<span class="comment">% Get M1</span>
+M1 = eq10_23_solve_M(A2oAt,1);
+<span class="comment">% Get M2</span>
+M2 = sqrt((1 + (.4/2)*M1^2)/(1.4*M1^2 - .4/2));
+<span class="comment">% Get change in enthalpy</span>
+enth = abs(get_delta_s(M2));
+<span class="comment">% Get p02op01</span>
+p02op01 = exp(-enth/287);
+<span class="comment">% Get A2/Astar</span>
+A2oAstar = eq10_23_solve_area(M2);
+<span class="comment">% Get Ae/Astar</span>
+AeoAstar_c2 = 1.53*(A2oAt^-1)*A2oAstar;
+<span class="comment">% Solve for Me</span>
+Me_out = eq10_23_solve_M(AeoAstar_c2,0);
+<span class="comment">% Solve Po2ope</span>
+po2ope = (1+(.4/2)*Me_out^2)^(1.4/.4);
+Pe = (po2ope^-1)*(p02op01);
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span> M = pop0_solveM(p0op)
+<span class="comment">%POP0_SOLVEM Summary of this function goes here</span>
+<span class="comment">%   Detailed explanation goes here</span>
+M = sqrt((2/.4)*((p0op^(.4/1.4))-1));
+
+
+<span class="keyword">end</span>
+
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+clc;clear all;close all;
+%% Begin code block for part b
+A_eoA_t = 1.53;
+p_0 = 1;
+p_e_a = 0.94;
+
+p_0op_e_a = p_0/p_e_a;
+M_e_a = pop0_solveM(p_0op_e_a);
+
+A_eoA_star_a = eq10_23_solve_area(M_e_a);
+A_toA_star_a = (1/A_eoA_t)*A_eoA_star_a;
+
+%% Begin code block for part b
+p_e_b = 0.886;
+
+p_0op_e_b = p_0/p_e_b;
+M_e_b = pop0_solveM(p_0op_e_b);
+
+A_eoA_star_b = eq10_23_solve_area(M_e_b);
+A_toA_star_b = (1/A_eoA_t)*A_eoA_star_b;
+
+%% Begin code block for part c
+p_e_c = 0.75;
+
+p_0op_e_c = p_0/p_e_c;
+M_e_c = pop0_solveM(p_0op_e_c);
+
+A_eoA_star_c = eq10_23_solve_area(M_e_c);
+A_toA_star_c = (1/A_eoA_t)*A_eoA_star_c;
+
+% Create guess vector
+A2oAt = 1.2:0.01:1.3;
+for i = 1:length(A2oAt)
+    [Me_out(i),Pe(i)] = guess_iteration(A2oAt(i));
+end
+%% Begin code bloc for part d
+p_e_d = 0.154;
+
+p_0op_e_d = p_0/p_e_d;
+M_e_d = pop0_solveM(p_0op_e_d);
+
+A_eoA_star_d = eq10_23_solve_area(M_e_d);
+A_toA_star_d = (1/A_eoA_t)*A_eoA_star_d;
+
+%% Functions included
+% <include> eq10_23_solve_area.m eq10_23_solve_M.m get_delta_s.m guess_iteration.m pop0_solveM.m</include>
+
+##### SOURCE END #####
+--></body></html>

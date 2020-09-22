@@ -1,0 +1,282 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>CA2_Driver</title><meta name="generator" content="MATLAB 9.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-02-27"><meta name="DC.source" content="CA2_Driver.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Housekeeping</a></li><li><a href="#3">Create all necessary constants for the function</a></li><li><a href="#4">Create plots for the first bullet point</a></li><li><a href="#5">Perform Error analysis for the Second bullet point</a></li><li><a href="#6">Create plots for the third bullet point</a></li></ul></div><pre class="codeinput"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">% ASEN 3111 - CA2</span>
+<span class="comment">%</span>
+<span class="comment">% Created By: Johnathan Tucker</span>
+<span class="comment">%</span>
+<span class="comment">% Collaborators: N/A</span>
+<span class="comment">%</span>
+<span class="comment">% The purpose of the script is to contain all of the constants and basic</span>
+<span class="comment">% computation that will be passed to the plot airfoil flow function as well</span>
+<span class="comment">% as the plot settings function</span>
+<span class="comment">%</span>
+<span class="comment">% Created Date: 2/23/2020</span>
+<span class="comment">%</span>
+<span class="comment">% Change Log:</span>
+<span class="comment">%           - 2/25/2020: Code up plot airfoil function</span>
+<span class="comment">%           - 2/26/2020: Code up plot settings function</span>
+<span class="comment">%           - 2/27/2020: Finalize formatting</span>
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+</pre><h2 id="2">Housekeeping</h2><pre class="codeinput">clc;
+clear <span class="string">all</span>;
+close <span class="string">all</span>;
+tic
+</pre><h2 id="3">Create all necessary constants for the function</h2><pre class="codeinput">c = 2; <span class="comment">% [m]</span>
+alpha = 12*pi/180; <span class="comment">% [rad]</span>
+V_inf = 68; <span class="comment">% [m/s]</span>
+p_inf = 101.3e3; <span class="comment">% [Pa]</span>
+rho_inf = 1.225; <span class="comment">% [kg/m^3]</span>
+N = 100; <span class="comment">% Iteration Number</span>
+</pre><h2 id="4">Create plots for the first bullet point</h2><pre class="codeinput">[psi_plot,phi_plot,press_plot] = Plot_Airfoil_Flow(c,alpha,V_inf,p_inf,rho_inf,N);
+Plot_Settings(psi_plot,phi_plot,press_plot,0,0,0,1)
+</pre><img vspace="5" hspace="5" src="CA2_Driver_01.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_02.png" alt=""> <h2 id="5">Perform Error analysis for the Second bullet point</h2><p>The process for this section will be to use a large N, get the frobenius norm of the pressure matrix at this large N, and then use that value as a point of comparison for all other iteration values.</p><pre class="codeinput">N = 10000;
+[psi_plot,phi_plot,press_plot] = Plot_Airfoil_Flow(c,alpha,V_inf,p_inf,rho_inf,N);
+<span class="comment">% Get the "exact" frobenius norm value</span>
+press_ax = press_plot.Children;
+dataObj = get(press_plot.Children,<span class="string">'children'</span>);
+<span class="keyword">if</span> iscell(dataObj)
+    data_struct = dataObj{2};
+    pressure_mat = data_struct(2).ZData;
+<span class="keyword">else</span>
+    pressure_mat = dataObj(2).ZData;
+<span class="keyword">end</span>
+frob_exact = norm(pressure_mat,<span class="string">'fro'</span>);
+
+<span class="comment">% Now iterate through N values calculating the frobenius norm and plot the</span>
+<span class="comment">% results</span>
+<span class="comment">% NOTE: This section takes a long time to run. The result of this loop was</span>
+<span class="comment">% saved into the 'error.mat' to save on runtime, and thus the grader's</span>
+<span class="comment">% time.</span>
+<span class="comment">% for N = 1:300</span>
+<span class="comment">%     [psi_plot,phi_plot,press_plot] = Plot_Airfoil_Flow(c,alpha,V_inf,p_inf,rho_inf,N);</span>
+<span class="comment">%     % Get the "exact" frobenius norm value</span>
+<span class="comment">%     press_ax = press_plot.Children;</span>
+<span class="comment">%     dataObj = get(press_plot.Children,'children');</span>
+<span class="comment">%     data_struct = dataObj{2};</span>
+<span class="comment">%     pressure_mat = data_struct(2).ZData;</span>
+<span class="comment">%     frob_compare = norm(pressure_mat,'fro');</span>
+<span class="comment">%</span>
+<span class="comment">%     error_vec(N) = abs(frob_exact - frob_compare)/frob_compare * 100;</span>
+<span class="comment">% end</span>
+<span class="comment">% Reset the N value because the iteration is commented out</span>
+N = 300;
+<span class="comment">% Load the error matrix</span>
+load(<span class="string">'error.mat'</span>)
+<span class="comment">% Create the error plot</span>
+figure(12)
+plot(1:1:N,error_vec)
+title(<span class="string">'$Error\:In\:Pressure\:Vs\:Number\:of\:Iterations$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>,<span class="string">'FontSize'</span>,23)
+xlabel(<span class="string">'$Number\:of\:Iterations$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+ylabel(<span class="string">'$Pressure\:Error[Pa]$'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)
+set(gcf, <span class="string">'Position'</span>, get(0, <span class="string">'Screensize'</span>));
+</pre><img vspace="5" hspace="5" src="CA2_Driver_03.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_04.png" alt=""> <h2 id="6">Create plots for the third bullet point</h2><p>First iterate through different chord lengths</p><pre class="codeinput"><span class="keyword">for</span> c = 2:7
+    <span class="comment">% Get the steam and potential plots</span>
+    [psi_plot, phi_plot, ~] = Plot_Airfoil_Flow(c,alpha,V_inf,p_inf,rho_inf,N);
+    <span class="comment">% Configure and display them</span>
+    Plot_Settings(psi_plot,phi_plot,press_plot,c,0,0,c)
+<span class="keyword">end</span>
+
+<span class="comment">% Next iterate through different angles of attack resetting the previously</span>
+<span class="comment">% changed variable to the baseline value</span>
+c = 2;
+alpha_vec = [6,8,10,12,14,16];
+<span class="keyword">for</span> flag = 8:13
+    <span class="comment">% Get the steam and potential plots</span>
+    [psi_plot, phi_plot,~] = Plot_Airfoil_Flow(c,alpha_vec(flag-7)*pi/180,V_inf,p_inf,rho_inf,N);
+    <span class="comment">% Configure and display them</span>
+    Plot_Settings(psi_plot,phi_plot,press_plot,0,alpha_vec(flag-7),0,flag)
+<span class="keyword">end</span>
+
+<span class="comment">% Finally iterate through different freestream velocities resetting the</span>
+<span class="comment">% previously changed variable to the baseline value</span>
+alpha = 12*pi/180;
+V_inf_vec = [25, 50, 100, 150, 200, 250];
+<span class="keyword">for</span> flag = 14:19
+    <span class="comment">% Get the steam and potential plots</span>
+    [psi_plot, phi_plot,~] = Plot_Airfoil_Flow(c,alpha,V_inf_vec(flag-13),p_inf,rho_inf,N);
+    <span class="comment">% Configure and display them</span>
+    Plot_Settings(psi_plot,phi_plot,press_plot,0,0,V_inf_vec(flag-13),flag)
+<span class="keyword">end</span>
+toc
+</pre><pre class="codeoutput">Elapsed time is 63.088390 seconds.
+</pre><img vspace="5" hspace="5" src="CA2_Driver_05.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_06.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_07.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_08.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_09.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_10.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_11.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_12.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_13.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_14.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_15.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_16.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_17.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_18.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_19.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_20.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_21.png" alt=""> <img vspace="5" hspace="5" src="CA2_Driver_22.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ASEN 3111 - CA2
+% 
+% Created By: Johnathan Tucker
+%
+% Collaborators: N/A
+%
+% The purpose of the script is to contain all of the constants and basic
+% computation that will be passed to the plot airfoil flow function as well
+% as the plot settings function
+%
+% Created Date: 2/23/2020
+%
+% Change Log: 
+%           - 2/25/2020: Code up plot airfoil function 
+%           - 2/26/2020: Code up plot settings function
+%           - 2/27/2020: Finalize formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Housekeeping
+clc;
+clear all;
+close all;
+tic
+%% Create all necessary constants for the function
+c = 2; % [m]
+alpha = 12*pi/180; % [rad]
+V_inf = 68; % [m/s]
+p_inf = 101.3e3; % [Pa]
+rho_inf = 1.225; % [kg/m^3]
+N = 100; % Iteration Number
+%% Create plots for the first bullet point
+[psi_plot,phi_plot,press_plot] = Plot_Airfoil_Flow(c,alpha,V_inf,p_inf,rho_inf,N);
+Plot_Settings(psi_plot,phi_plot,press_plot,0,0,0,1)
+
+%% Perform Error analysis for the Second bullet point
+% The process for this section will be to use a large N, get the frobenius norm of
+% the pressure matrix at this large N, and then use that value as a point
+% of comparison for all other iteration values.
+N = 10000;
+[psi_plot,phi_plot,press_plot] = Plot_Airfoil_Flow(c,alpha,V_inf,p_inf,rho_inf,N);
+% Get the "exact" frobenius norm value
+press_ax = press_plot.Children;
+dataObj = get(press_plot.Children,'children');
+if iscell(dataObj)
+    data_struct = dataObj{2};
+    pressure_mat = data_struct(2).ZData;
+else
+    pressure_mat = dataObj(2).ZData;
+end
+frob_exact = norm(pressure_mat,'fro');
+
+% Now iterate through N values calculating the frobenius norm and plot the
+% results
+% NOTE: This section takes a long time to run. The result of this loop was
+% saved into the 'error.mat' to save on runtime, and thus the grader's
+% time.
+% for N = 1:300
+%     [psi_plot,phi_plot,press_plot] = Plot_Airfoil_Flow(c,alpha,V_inf,p_inf,rho_inf,N);
+%     % Get the "exact" frobenius norm value
+%     press_ax = press_plot.Children;
+%     dataObj = get(press_plot.Children,'children');
+%     data_struct = dataObj{2};
+%     pressure_mat = data_struct(2).ZData;
+%     frob_compare = norm(pressure_mat,'fro');
+%     
+%     error_vec(N) = abs(frob_exact - frob_compare)/frob_compare * 100;
+% end
+% Reset the N value because the iteration is commented out
+N = 300;
+% Load the error matrix
+load('error.mat')
+% Create the error plot
+figure(12)
+plot(1:1:N,error_vec)
+title('$Error\:In\:Pressure\:Vs\:Number\:of\:Iterations$','Interpreter','latex','FontSize',23)
+xlabel('$Number\:of\:Iterations$','Interpreter','latex')
+ylabel('$Pressure\:Error[Pa]$','Interpreter','latex')
+set(gcf, 'Position', get(0, 'Screensize'));
+
+%% Create plots for the third bullet point
+% First iterate through different chord lengths
+for c = 2:7
+    % Get the steam and potential plots
+    [psi_plot, phi_plot, ~] = Plot_Airfoil_Flow(c,alpha,V_inf,p_inf,rho_inf,N);
+    % Configure and display them
+    Plot_Settings(psi_plot,phi_plot,press_plot,c,0,0,c)
+end
+
+% Next iterate through different angles of attack resetting the previously
+% changed variable to the baseline value
+c = 2;
+alpha_vec = [6,8,10,12,14,16];
+for flag = 8:13
+    % Get the steam and potential plots
+    [psi_plot, phi_plot,~] = Plot_Airfoil_Flow(c,alpha_vec(flag-7)*pi/180,V_inf,p_inf,rho_inf,N);
+    % Configure and display them
+    Plot_Settings(psi_plot,phi_plot,press_plot,0,alpha_vec(flag-7),0,flag)
+end
+
+% Finally iterate through different freestream velocities resetting the 
+% previously changed variable to the baseline value
+alpha = 12*pi/180;
+V_inf_vec = [25, 50, 100, 150, 200, 250];
+for flag = 14:19
+    % Get the steam and potential plots
+    [psi_plot, phi_plot,~] = Plot_Airfoil_Flow(c,alpha,V_inf_vec(flag-13),p_inf,rho_inf,N);
+    % Configure and display them
+    Plot_Settings(psi_plot,phi_plot,press_plot,0,0,V_inf_vec(flag-13),flag)
+end
+toc
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,36 @@
+function cpData = getcpData(filename)
+data1 = load(filename);
+differentialPressure = data1(:,7:22);
+
+for i = 1:12
+        newData(i,:) = [data1((i-1)*20+1,23),...
+            mean(data1((i-1)*20+1:i*20,4)),...
+            mean(data1((i-1)*20+1:i*20,5)),...
+            mean(data1((i-1)*20+1:i*20,7)),mean(data1((i-1)*20+1:i*20,8)),...
+            mean(data1((i-1)*20+1:i*20,9)),mean(data1((i-1)*20+1:i*20,10)),...
+            mean(data1((i-1)*20+1:i*20,11)),mean(data1((i-1)*20+1:i*20,12)),...
+            mean(data1((i-1)*20+1:i*20,13)),mean(data1((i-1)*20+1:i*20,14)),...
+            mean(data1((i-1)*20+1:i*20,15)),mean(data1((i-1)*20+1:i*20,16)),...
+            mean(data1((i-1)*20+1:i*20,17)),mean(data1((i-1)*20+1:i*20,18)),...
+            mean(data1((i-1)*20+1:i*20,19)),mean(data1((i-1)*20+1:i*20,20)),...
+            mean(data1((i-1)*20+1:i*20,21)),mean(data1((i-1)*20+1:i*20,22))];
+end
+
+%Interpolate trailing edge
+for i = 1:11
+    newData(i,20) = newData(1,11)+(((newData(i,11)-newData(i,10))/0.7)*0.7);
+end
+
+for i = 1:11
+    newData(i,21) = newData(1,19)+(((newData(i,19)-newData(i,18))/0.7)*0.7);
+end
+
+for i = 1:11
+    newData(i,22) = mean(newData(i,20:21));
+end
+
+for i = 1:12
+    cpData(i,:) = [newData(i,1), newData(i,2),...
+        newData(i,4:19)./newData(i,3),newData(i,22)./newData(i,3)];
+end
+end
